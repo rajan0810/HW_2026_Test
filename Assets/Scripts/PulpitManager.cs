@@ -2,9 +2,11 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using TMPro;
 
 public class PulpitManager: MonoBehaviour
 {
+    public TextMeshProUGUI timerText;
     private bool hasBeenScored = false;
     private float lifetime;
     private float spawnTriggerTime;
@@ -37,12 +39,15 @@ public class PulpitManager: MonoBehaviour
 
         warningColor = originalColor * 0.2f;
 
+        timerText.text = lifetime.ToString("F2");
+
         StartCoroutine(ScaleUp());
     }
 
     void Update()
     {
         aliveTime += Time.deltaTime;
+        timerText.text = (lifetime - aliveTime).ToString("F2");
 
         if (aliveTime >= spawnTriggerTime && !hasSpawnedNext)
         {
