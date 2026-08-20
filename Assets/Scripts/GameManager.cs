@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using TMPro;
 
 public class GameManager: MonoBehaviour
 {
@@ -17,10 +18,16 @@ public class GameManager: MonoBehaviour
     private Vector3 lastPulpitPosition = Vector3.zero;
     private List<GameObject> activePulpits = new List<GameObject>();
 
+    [Header("UI and Scoring")]
+    public TextMeshProUGUI scoreText;
+    private int score = 0;
+
 
     void Start()
     {
         LoadGameData();
+
+        UpdateScoreUI();
     }
 
     void LoadGameData()
@@ -57,6 +64,17 @@ public class GameManager: MonoBehaviour
 
         lastPulpitPosition = Vector3.zero;
         activePulpits.Add(firstPulpit);
+    }
+
+    public void IncreaseScore()
+    {
+        score++;
+        UpdateScoreUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        scoreText.text = "" + score;
     }
 
 

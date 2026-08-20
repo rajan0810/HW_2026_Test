@@ -5,6 +5,7 @@ using System.Collections;
 
 public class PulpitManager: MonoBehaviour
 {
+    private bool hasBeenScored = false;
     private float lifetime;
     private float spawnTriggerTime;
     private GameManager gameManager;
@@ -45,6 +46,17 @@ public class PulpitManager: MonoBehaviour
             isShrinking = true;
             gameManager.RemovePulpitFromList(gameObject);
             StartCoroutine(ScaleDownAndDestroy());
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (!hasBeenScored && collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("COLLIDED!");
+
+            hasBeenScored = true; // LOCK
+            gameManager.IncreaseScore();
         }
     }
 
