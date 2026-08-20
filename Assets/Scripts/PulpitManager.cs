@@ -19,6 +19,10 @@ public class PulpitManager: MonoBehaviour
     private float scaleDuration = 0.4f;
     private bool isShrinking = false;
 
+    private MeshRenderer pulpitRenderer;
+    private Color originalColor;
+    private Color warningColor;
+
     public void Initialize(float minTime, float maxTime, float spawnTime, GameManager gm)
     {
         lifetime = UnityEngine.Random.Range(minTime, maxTime);
@@ -27,6 +31,11 @@ public class PulpitManager: MonoBehaviour
 
         targetScale = transform.localScale;
         transform.localScale = Vector3.zero;
+
+        pulpitRenderer = GetComponent<MeshRenderer>();
+        originalColor = pulpitRenderer.material.color;
+
+        warningColor = originalColor * 0.2f;
 
         StartCoroutine(ScaleUp());
     }
@@ -39,6 +48,8 @@ public class PulpitManager: MonoBehaviour
         {
             gameManager.SpawnPulpit();
             hasSpawnedNext = true;
+
+            StartCoroutine(BlinkWarning());
         }
 
         if (aliveTime >= lifetime && !isShrinking)
@@ -46,6 +57,20 @@ public class PulpitManager: MonoBehaviour
             isShrinking = true;
             gameManager.RemovePulpitFromList(gameObject);
             StartCoroutine(ScaleDownAndDestroy());
+        }
+    }
+
+    private IEnumerator BlinkWarning()
+    {
+        float blinkSpeed = 4f;
+
+        while (true)
+        {
+            float lerpValue = Mathf.PingPong(Time.time * blinkSpeed, 1f);
+
+            pulpitRenderer.material.color = Color.Lerp(originalColor, warningColor, lerpValue);
+
+            yield return null;
         }
     }
 
