@@ -15,6 +15,7 @@ public class GameManager: MonoBehaviour
     [Header("Pulpit Spawning")]
     public GameObject pulpitPrefab;
     private Vector3 lastPulpitPosition = Vector3.zero;
+    private List<GameObject> activePulpits = new List<GameObject>();
 
 
     void Start()
@@ -55,19 +56,39 @@ public class GameManager: MonoBehaviour
         );
 
         lastPulpitPosition = Vector3.zero;
+        activePulpits.Add(firstPulpit);
     }
 
 
     public void SpawnPulpit()
     {
+        if (activePulpits.Count >= 2)
+        {
+            if (activePulpits[0] != null)
+            {
+                activePulpits[0].GetComponent<PulpitManager>().ForceShrinkAndDestroy();
+            }
+            activePulpits.RemoveAt(0);
+        }
+
         Vector3 spawnPosition = RandomAdjacent(lastPulpitPosition);
 
         GameObject newPulpit = Instantiate(pulpitPrefab, spawnPosition, Quaternion.identity);
 
         PulpitManager pulpitManager = newPulpit.GetComponent<PulpitManager>();
+
         pulpitManager.Initialize(gameData.pulpit_data.min_pulpit_destroy_time, gameData.pulpit_data.min_pulpit_destroy_time, gameData.pulpit_data.pulpit_spawn_time, this);
 
         lastPulpitPosition = spawnPosition;
+        activePulpits.Add(newPulpit);
+    }
+
+    public void RemovePulpitFromList(GameObject pulpit)
+    {
+        if (activePulpits.Contains(pulpit))
+        {
+            activePulpits.Remove(pulpit);
+        }
     }
 
     Vector3 RandomAdjacent(Vector3 currentPos)
