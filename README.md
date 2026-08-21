@@ -3,9 +3,9 @@
 
 
 
+<img width="960" height="537" alt="Screenshot 2026-08-21 at 7 57 21 PM" src="https://github.com/user-attachments/assets/30cee80a-cb3b-49a5-8482-cb67ddf83b66" />
 
-<img width="960" height="537" alt="Screenshot 2026-08-21 at 7 57 00 PM" src="https://github.com/user-attachments/assets/71dc73a8-12c6-4c13-b885-8a30b2c34567" />
-<img width="960" height="537" alt="Screenshot 2026-08-21 at 7 57 00 PM" src="https://github.com/user-attachments/assets/077ca8b4-d1b0-405e-885c-1e464d6f4cda" />
+
 
 # 🎮 Doofus - 3D Platformer Survival
 
@@ -17,7 +17,7 @@ https://github.com/user-attachments/assets/abf0645b-e131-4a88-aeee-6b1ace703e37
 ## 📸 Screenshots
 | Start Screen | Gameplay |
 | :---: | :---: |
-| <img width="960" height="537" alt="Screenshot 2026-08-21 at 7 57 21 PM" src="https://github.com/user-attachments/assets/30cee80a-cb3b-49a5-8482-cb67ddf83b66" /> | <img width="960" height="537" alt="Screenshot 2026-08-21 at 7 57 14 PM" src="https://github.com/user-attachments/assets/532d14b4-9a96-441b-bfe3-2794fe38f2f3" /> |
+| <img width="960" height="537" alt="Screenshot 2026-08-21 at 7 57 00 PM" src="https://github.com/user-attachments/assets/077ca8b4-d1b0-405e-885c-1e464d6f4cda" /> | <img width="960" height="537" alt="Screenshot 2026-08-21 at 7 57 14 PM" src="https://github.com/user-attachments/assets/532d14b4-9a96-441b-bfe3-2794fe38f2f3" /> |
 
 ## 🚀 Key Features
 
