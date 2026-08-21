@@ -21,13 +21,25 @@ public class GameManager: MonoBehaviour
     [Header("UI and Scoring")]
     public TextMeshProUGUI scoreText;
     private int score = 0;
+    public UIManager uiManager;
 
+    [Header("Game State")]
+    private bool isGameOver = false;
 
     void Start()
     {
         LoadGameData();
 
         UpdateScoreUI();
+    }
+
+    void Update()
+    {
+        if (!isGameOver && playerController != null && playerController.transform.position.y < -2f)
+        {
+            isGameOver = true;
+            uiManager.TriggerGameOver(score);
+        }
     }
 
     void LoadGameData()
@@ -61,6 +73,8 @@ public class GameManager: MonoBehaviour
             gameData.pulpit_data.pulpit_spawn_time,
             this
         );
+
+        pulpitManager.SetAsFirstPulpit();
 
         lastPulpitPosition = Vector3.zero;
         activePulpits.Add(firstPulpit);
@@ -121,6 +135,31 @@ public class GameManager: MonoBehaviour
 
         int randomIndex = UnityEngine.Random.Range(0, directions.Length);
         return currentPos + directions[randomIndex];
+    }
+
+    public void ResetGame()
+    {
+        foreach (GameObject pulpit in activePulpits)
+        {
+            if (pulpit != null) Destroy(pulpit);
+        }
+        activePulpits.Clear();
+
+        score = 0;
+        UpdateScoreUI();
+
+        playerController.transform.position = new Vector3(0f, 1f, 0f);
+
+        Rigidbody rb = playerController.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        SpawnFirstPulpit();
+        isGameOver = false;
     }
 
 

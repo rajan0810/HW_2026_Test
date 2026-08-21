@@ -90,6 +90,11 @@ public class PulpitManager: MonoBehaviour
         }
     }
 
+    public void SetAsFirstPulpit()
+    {
+        hasBeenScored = true;
+    }
+
     public void ForceShrinkAndDestroy() // For Game Manager to Call (public)
     {
         if (!isShrinking)

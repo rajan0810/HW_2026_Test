@@ -13,6 +13,9 @@ public class UIManager: MonoBehaviour
     [Header("Text References")]
     public TextMeshProUGUI finalScoreText;
 
+    [Header("Game Manager Reference")]
+    public GameManager gameManager;
+
     void Start()
     {
         Time.timeScale = 0f; //Freeze
@@ -42,12 +45,20 @@ public class UIManager: MonoBehaviour
 
     public void RestartGame()
     {
+        gameOverPanel.SetActive(false);
+        gamePanel.SetActive(true);
+
+        gameManager.ResetGame();
+
         Time.timeScale = 1f;
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-
+    public void GoToHome()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
 
 
