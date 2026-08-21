@@ -27,6 +27,8 @@ public class UIManager: MonoBehaviour
 
     public void StartGame()
     {
+        AudioManager.instance.PlayButtonClick();
+        
         Time.timeScale = 1f;
 
         startPanel.SetActive(false);
@@ -35,6 +37,7 @@ public class UIManager: MonoBehaviour
 
     public void TriggerGameOver(int finalScore)
     {
+
         Time.timeScale = 0f;
 
         gamePanel.SetActive(false);
@@ -45,6 +48,9 @@ public class UIManager: MonoBehaviour
 
     public void RestartGame()
     {
+        AudioManager.instance.PlayButtonClick();
+        AudioManager.instance.PlayBGM();
+
         gameOverPanel.SetActive(false);
         gamePanel.SetActive(true);
 
@@ -57,6 +63,9 @@ public class UIManager: MonoBehaviour
 
     public void GoToHome()
     {
+        AudioManager.instance.PlayButtonClick();
+
+        AudioManager.instance.PlayBGM();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

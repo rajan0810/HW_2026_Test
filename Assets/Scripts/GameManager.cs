@@ -38,6 +38,9 @@ public class GameManager: MonoBehaviour
         if (!isGameOver && playerController != null && playerController.transform.position.y < -2f)
         {
             isGameOver = true;
+            AudioManager.instance.StopBGM();
+
+            AudioManager.instance.PlayFall();
             uiManager.TriggerGameOver(score);
         }
     }
