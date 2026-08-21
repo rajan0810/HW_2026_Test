@@ -37,11 +37,7 @@ public class GameManager: MonoBehaviour
     {
         if (!isGameOver && playerController != null && playerController.transform.position.y < -2f)
         {
-            isGameOver = true;
-            AudioManager.instance.StopBGM();
-
-            AudioManager.instance.PlayFall();
-            uiManager.TriggerGameOver(score);
+            StartCoroutine(DeathSequence());
         }
     }
 
@@ -151,19 +147,60 @@ public class GameManager: MonoBehaviour
         score = 0;
         UpdateScoreUI();
 
-        playerController.transform.position = new Vector3(0f, 1f, 0f);
+        playerController.enabled = true;
+        Collider col = playerController.GetComponent<Collider>();
+        if (col != null) col.enabled = true;
 
+        FollowPlayer camFollow = Camera.main.GetComponent<FollowPlayer>();
+        if (camFollow != null) camFollow.enabled = true;
+
+        //RESET PHYSICS
         Rigidbody rb = playerController.GetComponent<Rigidbody>();
-
         if (rb != null)
         {
+            rb.isKinematic = false;
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+
+        playerController.transform.position = new Vector3(0f, 1f, 0f);
 
         SpawnFirstPulpit();
         isGameOver = false;
     }
 
+    private IEnumerator DeathSequence()
+    {
+        isGameOver = true;
+        
+        AudioManager.instance.StopBGM();
+        AudioManager.instance.PlayFall();
 
+        playerController.enabled = false; // Disabling User Input
+
+        FollowPlayer camFollow = Camera.main.GetComponent<FollowPlayer>();
+        if (camFollow != null) camFollow.enabled = false; //Lock Camera in place
+
+        Rigidbody rb = playerController.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.isKinematic = true; // Turn off gravity
+        }
+
+        Collider col = playerController.GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
+        yield return new WaitForSeconds(0.75f);
+
+        if (rb != null)
+        {
+            rb.isKinematic = false; // Enable Gravity 
+            rb.linearVelocity = new Vector3(0f, 3f, 0f);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        uiManager.TriggerGameOver(score);
+    }
 }
